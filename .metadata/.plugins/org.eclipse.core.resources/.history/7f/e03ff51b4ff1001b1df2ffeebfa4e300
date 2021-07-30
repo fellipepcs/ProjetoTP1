@@ -1,0 +1,313 @@
+package Tp1Projeto;
+import java.util.Scanner;
+public class Tp1Projeto {
+    static Scanner ler = new Scanner(System.in);
+    static String pesquisa;
+    static String endereco[] = new String[200];
+    static String nome[] = new String[200];
+    static String telefone[] = new String[200];
+    static String nomeProduto[] = new String[200]; // Declaracao de Variaveis est�ticas
+    static String descricao[] = new String[200];
+    static double valorCompra[] = new double[200];
+    static double porcentagemLucro[] = new double[200];
+    static double quantEstoque[] = new double[200];
+    static int op, quantClientes, quantProdutos, id;
+    public static void main(String[] args) { // main
+        int op;
+        Scanner ler = new Scanner(System.in);//Scanner
+        for(int i=0;i<11;i++){
+            String nome1;
+            nome1="Cliente"; // Adicionando os 10 clientes
+            nome[i]=nome1+i;
+        }
+        for(int i=0;i<11;i++){
+            String endereco1;
+            endereco1="Endereco"; // Adicionando os 10 enderecos
+            endereco[i]=endereco1+i;
+        }
+        for(int i=0;i<11;i++){
+            String telefone1;
+            telefone1="Telefone"; // Adicionando os 10 telefones
+            telefone[i]=telefone1+i;
+        }
+        for(int i=0;i<11;i++){
+            String nomeP1;
+            nomeP1="Produto"; // Adicionando os 10 produtos
+            nomeProduto[i]=nomeP1+i;
+        }
+        for(int i=0;i<11;i++){
+            String descricao1;
+            descricao1="Descricao"; // Adicionando as 10 descricoes
+            descricao[i]=descricao1+i;
+        }
+        for(int i=0;i<11;i++){
+            double valor12;
+            valor12=0; // Adicionando os 10 valores
+            valorCompra[i]=valor12+i;
+        }
+        for(int i=0;i<11;i++){
+            double lucro;   // Adicionando os 10 valores
+            lucro=0;
+            porcentagemLucro[i]=lucro+i;
+        }
+        for(int i=0;i<10;i++){
+            double estoque;
+            estoque=0; // adicionando os 10 estoques
+            quantEstoque[i]=estoque+i;
+        }
+        do { // loop dos casos
+            Menu(); // metodo do menu
+            op = ler.nextInt();
+            switch (op) { //switch para chamar as os casos
+                case 1:
+                    System.out.println("=================================================================="); // enfeite
+                    quantClientes = novoCliente(quantClientes, endereco, nome, telefone);// chamando o metodo e seus parametros para dentro do caso
+                    System.out.println("Cadastro feito com sucesso!");// enfeite
+                    break;
+                case 2:
+                    System.out.println("==================================================================");// enfeite
+                    buscarCliente(quantClientes, endereco, nome, telefone);// chamando o metodo e seus parametros para dentro do caso
+                    System.out.println("Busca feita com sucesso!");// enfeite
+                    break;
+                case 3:
+                    System.out.println("==================================================================");
+                    quantProdutos = cadastroProduto(quantProdutos, nomeProduto, descricao, valorCompra, porcentagemLucro, quantEstoque); //chamando o metodo e seus parametros para dentro do caso
+                    System.out.println("Cadastro feito com sucesso!");
+                    break;
+
+                case 4:
+                    System.out.println("==================================================================");
+                    buscaProduto(quantProdutos, nomeProduto, descricao, valorCompra, porcentagemLucro, quantEstoque); //chamando o metodo e seus parametros para dentro do caso
+                    System.out.println("Busca feita com sucesso!");
+                    break;
+
+                case 5:
+                    System.out.println("==================================================================");
+                    cadastroVenda(quantClientes, quantProdutos, endereco, nome, telefone, id, nomeProduto, descricao, valorCompra, porcentagemLucro, quantEstoque);//chamando o metodo e seus parametros para dentro do caso
+                    break;
+
+                case 6:
+                    System.out.println("==================================================================");
+                    mostrarProdutosEstoque(quantClientes,quantProdutos,nomeProduto,quantEstoque);//chamando o metodo e seus parametros para dentro do caso
+                    break;
+
+                case 7:
+                    System.out.println("==================================================================");
+                    System.out.println("Fique com Deus!");
+                    break;
+                default:
+                    System.out.println("Opcao do menu Invalida!"); // caso ele digite uma op��o invalida, aparecer� est� mensagem
+
+            }
+        } while (op != 7 || op > 7 || op < 1); // do while, contendo suas exce��es
+    }
+
+
+    public static int novoCliente(int quantClientes, String[] endereco, String[] nome, String[] telefone) { // metodo
+        int tamanho, tamanho2 = 0;
+        if (quantClientes > 0) { // if para adicionar a quantidade de clientes independente de vezes na entrada no metodo e somar com a do antigo loop
+            tamanho2 = quantClientes;
+        }
+        System.out.println("Digite quantos clientes voc� quer cadastrar:");
+        tamanho = ler.nextInt();
+        ler.nextLine();
+        quantClientes = quantClientes + tamanho;
+        for (int i = tamanho2; i < quantClientes; i++) { // Loop para receber as informa��es desejadas
+            System.out.println("Digite o nome do cliente:");
+            nome[i] = ler.nextLine();
+            System.out.println("Digite seu endere�o:");
+            endereco[i] = ler.nextLine();
+            System.out.println("Digite seu telefone(Apenas Numeros):");
+            telefone[i] = ler.nextLine();
+        }
+        return quantClientes; //retornar a quantidade de clientes para utilizar em outros metodos
+    }
+
+    public static void buscarCliente(int quantClientes, String[] endereco, String[] nome, String[] telefone) { // metodo
+        int cont = 0;
+        int alterar;
+        System.out.println("Digite o nome do cliente:");
+        pesquisa = ler.nextLine();
+        ler.nextLine();
+        for (int i = 0; i < 50; i++) {
+            if (pesquisa.equalsIgnoreCase(nome[i])) { // Comparando as String para achar o nome j� cadastrado
+                cont++;
+                System.out.println("O seu resultado da pesquisa e: \n");
+                System.out.println("Nome: " + nome[i]);
+                System.out.println("\n Endere�o:" + endereco[i]);
+                System.out.println("\n Telefone:" + telefone[i]);
+                System.out.println("Altera��o: \n 1- Nome do Cliente \n 2-Endere�o \n 3-Telefone\n 4-Voltar ao menu.");
+                alterar = ler.nextInt();
+                switch (alterar) { // Switch para melhorar as alternativas de funcionalidade
+                    case 1:
+                        System.out.println("Alterar nome do cliente\n");
+                        ler.nextLine();
+                        System.out.println("Digite o novo nome do cliente:"); // altera��o de nome
+                        nome[i] = ler.nextLine();
+                        break;
+                    case 2:
+                        System.out.println("Alterar nome do cliente\n");
+                        System.out.println("Digite o novo endere�o do cliente:"); // altera��o de endere�o
+                        endereco[i] = ler.nextLine();
+                        break;
+                    case 3:
+                        System.out.println("Alterar nome do cliente\n");
+                        System.out.println("Digite o novo telefone do cliente:"); // Altera��o de telefone
+                        telefone[i] = ler.nextLine();
+                        break;
+                    case 4:
+
+                        break;
+                    default:
+                        System.out.println("Digite uma opcao v�lida!");
+                }
+            }
+        }
+        if (cont == 0) { // If para caso ele digite um nome n�o cadastrado
+            System.out.println("Cliente nao encontrado!");
+        }
+    }
+
+    public static int cadastroProduto(int quantProdutos, String[] nomeProduto, String[] descricao, double[] valorCompra, double[] porcentagemLucro, double[] quantEstoque) { //metodo
+        int tam, tam2 = 0;
+        if (quantProdutos > 0) { // if para adicionar a quantidade de produtos independente de vezes na entrada no metodo e somar com a do antigo loop
+            tam2 = quantProdutos;
+        }
+        Scanner ler = new Scanner(System.in);
+        System.out.println("Digite quantos produtos voce deseja cadastrar:");
+        tam = ler.nextInt();
+        quantProdutos = quantProdutos + tam;
+        for (int i = tam2; i < quantProdutos+10; i++) { // for para armazenar os dados solicitados
+            ler.nextLine();
+            System.out.println("Digite o nome do produto: ");
+            nomeProduto[i] = ler.nextLine();
+            System.out.println("Digite a descri��o do produto:");
+            descricao[i] = ler.nextLine();
+            System.out.println("Digite o valor da compra:");
+            valorCompra[i] = ler.nextDouble();
+            System.out.println("Digite o valor da porcentagem:");
+            porcentagemLucro[i] = ler.nextDouble();
+            System.out.println("Digite o valor da quantidade em estoque:");
+            quantEstoque[i] = ler.nextDouble();
+        }
+        return quantProdutos; // Para utilizar em outros metodos
+    }
+
+
+    public static void Menu() { // Metodo do menu
+        System.out.println("=================== BEM VINDO AO PROGRAMA ==================");
+        System.out.println(" 1- Cadastro de novo cliente. \n 2- Busca por cliente. \n 3- Cadastro de novo produto \n 4- Busca por produto. \n 5- Cadastro de venda. \n 6- Mostrar produto em estoque \n 7- Sair");
+        System.out.println("\n Digite a opcao que deseja:");
+    }
+
+    public static void buscaProduto(int quantProdutos, String[] nomeProduto, String[] descricao, double[] valorCompra, double[] porcentagemLucro, double[] quantEstoque) { // metodo
+        int cont = 0;
+        int alterar;
+        Scanner ler = new Scanner(System.in);
+        String buscaProduto;
+        System.out.println("Digite o nome do produto que deseja buscar:");
+        buscaProduto = ler.next();
+        ler.nextLine();
+        for (int i = 0; i < quantProdutos+10; i++) {
+            if ((buscaProduto.equals(nomeProduto[i]))) { // compara��o de String para encontrar o nome do produto j� cadastrado
+                cont++;
+                System.out.println("O seu resultado da pesquisa e: \n");
+                System.out.println("Produto: " + nomeProduto[i]);
+                System.out.println("\n Descri��o:" + descricao[i]);
+                System.out.println("\n Valor da compra:" + valorCompra[i]);
+                System.out.println("\n Porcentagem:" + porcentagemLucro[i]);
+                System.out.println("\n Quantidade em estoque:" + quantEstoque[i]);
+                System.out.println("Altera��o: \n 1- Nome do Produto \n 2-Descri��o do Produto \n 3- Valor da compra \n 4-Porcentagem\n 5- Quantidade em estoque \n 6-Voltar ao menu.");
+                alterar = ler.nextInt();
+                switch (alterar) { // switch para melhorar a funcionalidade de op��es
+                    case 1:
+                        System.out.println("Alterar nome do Produto\n");
+                        ler.nextLine();
+                        System.out.println("Digite o novo nome do produto:"); // altera��o do nome do produto
+                        nomeProduto[i] = ler.nextLine();
+                        System.out.println(nomeProduto[i] + " Cadastrado com sucesso!");
+                        break;
+                    case 2:
+                        System.out.println("Alterar Descricao do Produto\n");
+                        ler.nextLine();
+                        System.out.println("Digite a nova descri��o do produto:"); // altera��o da descri��o do produto
+                        descricao[i] = ler.nextLine();
+                        System.out.println(descricao[i] + " Cadastrado com sucesso!");
+                        break;
+                    case 3:
+                        System.out.println("Alterar Valor de compra do Produto\n");
+                        ler.nextLine();
+                        System.out.println("Digite o novo valor de compra do produto:"); //altera��o do valor de compra do produto
+                        valorCompra[i] = ler.nextDouble();
+                        System.out.println(valorCompra[i] + " Cadastrado com sucesso!");
+                        break;
+                    case 4:
+                        System.out.println("Alterar da porcentagem do Produto\n");
+                        ler.nextLine();
+                        System.out.println("Digite o novo valor de porcentagem de lucro do produto:"); // altera��o da porcentagem de lucro do produto
+                        porcentagemLucro[i] = ler.nextDouble();
+                        System.out.println(porcentagemLucro[i] + " Cadastrado com sucesso!");
+                        break;
+                    case 5:
+                        System.out.println("Alterar Valor da quantidade em estoque do Produto\n");
+                        ler.nextLine();
+                        System.out.println("Digite o novo valor da quantidade em estoque do produto:"); // altera��o da quantidade em estoque
+                        quantEstoque[i] = ler.nextDouble();
+                        System.out.println(quantEstoque[i] + " Cadastrado com sucesso!");
+                        break;
+                    case 6:
+
+                        break;
+                }
+            }
+            if (cont == 0) { // Caso ele digite um nome do produto n�o cadastrado
+                System.out.println("Produto n�o encontrado!");
+            }
+        }
+    }
+
+    public static void cadastroVenda(int quantClientes, int quantProdutos, String[] endereco, String[] nome, String[] telefone, int id, String[] nomeProduto, String[] descricao, double[] valorCompra, double[] porcentagemLucro, double[] quantEstoque) { //metodo
+        String name;
+        int opc = 0;
+        double recebe, estoqueF;
+        for (int i = 0; i < quantClientes+10; i++) {
+            id++;
+            System.out.println(id + "-" + nome[i]); //listar nomes
+        }
+        System.out.println("Digite o nome do usuario que deseja selecionar:");
+        name = ler.nextLine();
+        for (int i = 0; i < quantClientes+10; i++) {
+            if (name.equalsIgnoreCase(nome[i])) { // achar clientes cadastrados
+                for (int j = 0; j < quantProdutos+10; j++) {
+                    System.out.println(nomeProduto[j]);//listar produtos
+                }
+                System.out.println("Selecione um dos produtos acima");
+                System.out.println("Digite o nome do produto selecionado:");
+                String nameProduto = ler.nextLine();
+                for (int k = 0; k < quantClientes+10; k++) {
+                    if (nameProduto.equalsIgnoreCase(nomeProduto[k])) { // achar produto cadastrado
+                        System.out.println("O nome do produto desejado �: " + nomeProduto[k]);
+                        System.out.println("Numero em estoque:" + quantEstoque[k]);
+                        System.out.println("Quantas unidade deseja comprar?");
+                        double produtosComprados = ler.nextDouble();
+                        if (produtosComprados < quantEstoque[k]) {
+                            recebe = quantEstoque[k]; // recebe quantidade do estoque
+                            estoqueF = (recebe) - (produtosComprados); // subtrai e adiciona a uma nova variavel
+                            quantEstoque[k] = estoqueF; // quantidade do estoque recebe o valor da nova variavel
+                            System.out.println("Produto comprado!");
+                        } else {
+                            System.out.println("O produto n�o pode ser comprado, porque voce quer comprar mais que a quantidade do estoque.");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static void mostrarProdutosEstoque(int quantClientes,int quantProdutos, String[]nomeProduto, double[] quantEstoque){ // metodo
+        System.out.println("--------------------ESTOQUE------------------------\n");
+        for(int i=0; i<quantProdutos+11; i++) {
+            System.out.print(nomeProduto[i] + " - " + quantEstoque[i]); //listar produtos e quantidade de estoque
+            System.out.print("\n");
+        }
+    }
+}
